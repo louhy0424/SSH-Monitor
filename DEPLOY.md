@@ -168,7 +168,7 @@ LOG_RETENTION_DAYS = 7      # 日志保留天数（自动清理）
 
 ```bash
 # Navigate to project directory / 进入项目目录
-cd /home/omen821/sshd-monitor
+cd sshd-monitor
 
 # Initialize git / 初始化 git
 git init
