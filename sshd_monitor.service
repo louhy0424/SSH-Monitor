@@ -1,0 +1,41 @@
+[Unit]
+Description=SSH Connection Monitor
+Documentation=https://example.com/sshd-monitor
+After=network.target ssh.service
+Wants=network.target
+
+[Service]
+Type=simple
+# 运行用户（建议使用 root 以获取完整的连接信息）
+User=root
+Group=root
+
+# 工作目录
+WorkingDirectory=/opt/sshd_monitor
+
+# 启动命令
+ExecStart=/usr/bin/python3 /opt/sshd_monitor/sshd_monitor.py
+
+# 重启策略：总是重启，最多每分钟尝试 5 次
+Restart=always
+RestartSec=5
+StartLimitInterval=60
+StartLimitBurst=5
+
+# 标准输出和错误重定向到 syslog
+StandardOutput=journal
+StandardError=journal
+
+# 日志标签
+SyslogIdentifier=sshd_monitor
+
+# 环境变量（可选，例如设置 Python 不缓冲输出）
+Environment="PYTHONUNBUFFERED=1"
+
+# 安全设置（可选，根据需要启用）
+# NoNewPrivileges=true
+# ProtectSystem=strict
+# ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target
